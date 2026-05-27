@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>She Can Foundation — Contact Us</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --rose:    #c0395a;
+      --blush:   #f5e6eb;
+      --cream:   #faf7f4;
+      --ink:     #1a1118;
+      --muted:   #7a6470;
+      --border:  #e0cfd6;
+      --success: #2d7a5f;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 40% at 80% 10%, rgba(192,57,90,.10) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 50% at 10% 90%, rgba(192,57,90,.07) 0%, transparent 65%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.1rem 2.5rem;
+      background: rgba(250,247,244,.85);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      animation: slideDown .6s ease both;
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.45rem; font-weight: 600;
+      color: var(--rose); letter-spacing: .02em;
+    }
+    .nav-links { display: flex; gap: 2rem; }
+    .nav-links a {
+      font-size: .85rem; font-weight: 500; letter-spacing: .06em;
+      color: var(--muted); text-decoration: none; text-transform: uppercase;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--rose); }
+
+    .hero {
+      position: relative; z-index: 1;
+      display: grid; grid-template-columns: 1fr 1fr;
+      min-height: 88vh; align-items: center;
+      padding: 4rem 2.5rem 4rem 6vw;
+      gap: 3rem;
+    }
+    .hero-text { animation: fadeUp .8s .2s ease both; }
+    .hero-tag {
+      display: inline-block;
+      font-size: .72rem; font-weight: 500; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--rose);
+      background: var(--blush); border-radius: 20px;
+      padding: .35rem .9rem; margin-bottom: 1.4rem;
+    }
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.8rem, 5vw, 4.4rem);
+      line-height: 1.1; font-weight: 600;
+      color: var(--ink); margin-bottom: 1.2rem;
+    }
+    .hero-title em { color: var(--rose); font-style: italic; }
+    .hero-sub {
+      font-size: 1.05rem; color: var(--muted);
+      line-height: 1.75; max-width: 42ch;
+      font-weight: 300;
+    }
+    .hero-stats {
+      display: flex; gap: 2.5rem; margin-top: 2.8rem;
+      animation: fadeUp .8s .4s ease both;
+    }
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem; font-weight: 600; color: var(--rose);
+    }
+    .stat-label { font-size: .78rem; color: var(--muted); margin-top: .2rem; text-transform: uppercase; letter-spacing: .07em; }
+
+    .form-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2.8rem 2.4rem;
+      box-shadow: 0 20px 60px rgba(26,17,24,.07), 0 4px 16px rgba(192,57,90,.05);
+      animation: fadeUp .8s .3s ease both;
+      position: relative; z-index: 1;
+    }
+    .form-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem; font-weight: 600; margin-bottom: .4rem;
+    }
+    .form-subtitle { font-size: .875rem; color: var(--muted); margin-bottom: 2rem; }
+
+    .form-group { margin-bottom: 1.3rem; }
+    label {
+      display: block; font-size: .78rem; font-weight: 500;
+      letter-spacing: .07em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: .5rem;
+    }
+    input, textarea, select {
+      width: 100%; padding: .85rem 1.1rem;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      background: var(--cream);
+      font-family: 'DM Sans', sans-serif;
+      font-size: .95rem; color: var(--ink);
+      transition: border-color .2s, box-shadow .2s, background .2s;
+      outline: none;
+    }
+    input:focus, textarea:focus, select:focus {
+      border-color: var(--rose);
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(192,57,90,.1);
+    }
+    input.error, textarea.error { border-color: #e05; box-shadow: 0 0 0 3px rgba(238,0,85,.08); }
+    .error-msg { font-size: .78rem; color: #e05; margin-top: .35rem; display: none; }
+    .error-msg.show { display: block; }
+
+    textarea { resize: vertical; min-height: 110px; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    select { cursor: pointer; appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237a6470' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 1rem center;
+      padding-right: 2.5rem;
+    }
+
+    .checkbox-group { display: flex; align-items: flex-start; gap: .7rem; }
+    .checkbox-group input[type="checkbox"] {
+      width: 17px; height: 17px; flex-shrink: 0;
+      margin-top: .15rem; accent-color: var(--rose);
+    }
+    .checkbox-group label {
+      text-transform: none; letter-spacing: 0;
+      font-size: .85rem; color: var(--muted); font-weight: 400;
+    }
+    .checkbox-group label a { color: var(--rose); text-decoration: underline; }
+
+    .btn-submit {
+      width: 100%; padding: 1rem;
+      background: var(--rose); color: #fff;
+      border: none; border-radius: 10px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .95rem; font-weight: 500;
+      letter-spacing: .05em; cursor: pointer;
+      margin-top: 1.4rem;
+      transition: background .2s, transform .15s, box-shadow .2s;
+      position: relative; overflow: hidden;
+    }
+    .btn-submit:hover { background: #a82f4e; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(192,57,90,.35); }
+    .btn-submit:active { transform: translateY(0); }
+    .btn-submit .btn-inner { display: flex; align-items: center; justify-content: center; gap: .6rem; }
+    .btn-submit .spinner {
+      width: 18px; height: 18px; border: 2px solid rgba(255,255,255,.4);
+      border-top-color: #fff; border-radius: 50%;
+      animation: spin .7s linear infinite; display: none;
+    }
+    .btn-submit.loading .spinner { display: block; }
+    .btn-submit.loading .btn-text { opacity: .7; }
+
+    .success-state {
+      display: none; text-align: center; padding: 1.5rem 0;
+      animation: popIn .5s ease both;
+    }
+    .success-state.show { display: block; }
+    .success-icon {
+      width: 68px; height: 68px; border-radius: 50%;
+      background: linear-gradient(135deg, #2d7a5f, #4aa87e);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.2rem; font-size: 1.8rem;
+      box-shadow: 0 8px 24px rgba(45,122,95,.25);
+      animation: bounceIn .6s ease both;
+    }
+    .success-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.7rem; font-weight: 600; margin-bottom: .5rem;
+    }
+    .success-msg { color: var(--muted); font-size: .95rem; line-height: 1.65; }
+    .success-ref { font-size: .78rem; color: var(--muted); margin-top: 1rem; }
+    .success-ref span { color: var(--rose); font-weight: 500; }
+
+    .about-strip {
+      position: relative; z-index: 1;
+      background: var(--ink);
+      color: #fff;
+      padding: 5rem 6vw;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+    }
+    .about-label {
+      font-size: .72rem; letter-spacing: .14em; text-transform: uppercase;
+      color: var(--rose); margin-bottom: 1rem;
+    }
+    .about-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 3.5vw, 3rem); line-height: 1.2;
+      margin-bottom: 1.3rem;
+    }
+    .about-body { color: rgba(255,255,255,.65); line-height: 1.8; font-weight: 300; font-size: .97rem; }
+    .about-pillars { display: flex; flex-direction: column; gap: 1.3rem; }
+    .pillar {
+      display: flex; gap: 1rem; align-items: flex-start;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 12px; padding: 1.1rem 1.3rem;
+      transition: background .2s;
+    }
+    .pillar:hover { background: rgba(192,57,90,.1); }
+    .pillar-icon { font-size: 1.4rem; flex-shrink: 0; }
+    .pillar-title { font-weight: 500; margin-bottom: .2rem; }
+    .pillar-desc { font-size: .85rem; color: rgba(255,255,255,.55); line-height: 1.5; }
+
+    footer {
+      position: relative; z-index: 1;
+      background: var(--blush);
+      border-top: 1px solid var(--border);
+      padding: 2.2rem 6vw;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-brand { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; color: var(--rose); font-weight: 600; }
+    .footer-copy { font-size: .82rem; color: var(--muted); }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a { font-size: .82rem; color: var(--muted); text-decoration: none; }
+    .footer-links a:hover { color: var(--rose); }
+
+    @keyframes slideDown { from { transform: translateY(-100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    @keyframes fadeUp { from { transform: translateY(30px); opacity: 0; } to { transform: none; opacity: 1; } }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes popIn { from { transform: scale(.9); opacity: 0; } to { transform: none; opacity: 1; } }
+    @keyframes bounceIn {
+      0%   { transform: scale(0); }
+      60%  { transform: scale(1.15); }
+      80%  { transform: scale(.95); }
+      100% { transform: scale(1); }
+    }
+
+    .char-counter { font-size: .75rem; color: var(--muted); text-align: right; margin-top: .3rem; }
+
+    @media (max-width: 860px) {
+      .hero { grid-template-columns: 1fr; min-height: unset; padding: 3rem 1.5rem; }
+      .form-row { grid-template-columns: 1fr; }
+      .about-strip { grid-template-columns: 1fr; padding: 3rem 1.5rem; }
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1.2rem; }
+      footer { flex-direction: column; text-align: center; }
+    }
+    @media (max-width: 480px) {
+      .hero-stats { flex-wrap: wrap; gap: 1.5rem; }
+      .nav-links a { font-size: .78rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">She Can Foundation</div>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+    <a href="#contact">Volunteer</a>
+  </div>
+</nav>
+
+<section class="hero" id="contact">
+  <div class="hero-text">
+    <span class="hero-tag">✦ Empowering Women Since 2018</span>
+    <h1 class="hero-title">She <em>Can.</em><br>She <em>Will.</em><br>She <em>Does.</em></h1>
+    <p class="hero-sub">
+      We believe every woman deserves the tools, support, and community to unlock her full potential.
+      Reach out — your story matters to us.
+    </p>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">12K+</div>
+        <div class="stat-label">Lives Touched</div>
+      </div>
+      <div>
+        <div class="stat-num">48</div>
+        <div class="stat-label">Cities Active</div>
+      </div>
+      <div>
+        <div class="stat-num">200+</div>
+        <div class="stat-label">Volunteers</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-card">
+    <h2 class="form-title">Get in Touch</h2>
+    <p class="form-subtitle">We'd love to hear from you. Fill in the form below.</p>
+
+    <form id="contactForm" novalidate>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="firstName">First Name</label>
+          <input type="text" id="firstName" name="firstName" placeholder="Name" autocomplete="given-name"/>
+          <div class="error-msg" id="firstNameErr">Please enter your first name.</div>
+        </div>
+        <div class="form-group">
+          <label for="lastName">Last Name</label>
+          <input type="text" id="lastName" name="lastName" placeholder="Surname" autocomplete="family-name"/>
+          <div class="error-msg" id="lastNameErr">Please enter your last name.</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" placeholder="abc@example.com" autocomplete="email"/>
+        <div class="error-msg" id="emailErr">Please enter a valid email address.</div>
+      </div>
+
+      <div class="form-group">
+        <label for="topic">I'm reaching out about</label>
+        <select id="topic" name="topic">
+          <option value="">Select a topic…</option>
+          <option>Volunteering</option>
+          <option>Donations & Partnerships</option>
+          <option>Program Enrollment</option>
+          <option>Media & Press</option>
+          <option>General Inquiry</option>
+        </select>
+        <div class="error-msg" id="topicErr">Please select a topic.</div>
+      </div>
+
+      <div class="form-group">
+        <label for="message">Your Message</label>
+        <textarea id="message" name="message" placeholder="Tell us how we can help or how you'd like to get involved…" maxlength="500"></textarea>
+        <div class="char-counter"><span id="charCount">0</span> / 500</div>
+        <div class="error-msg" id="messageErr">Please write a message (at least 10 characters).</div>
+      </div>
+
+      <div class="form-group checkbox-group">
+        <input type="checkbox" id="consent" name="consent"/>
+        <label for="consent">I agree to the <a href="#">Privacy Policy</a> and consent to being contacted by She Can Foundation.</label>
+      </div>
+      <div class="error-msg" id="consentErr" style="margin-top:-.8rem; margin-bottom:.5rem;">Please accept to continue.</div>
+
+      <button type="submit" class="btn-submit" id="submitBtn">
+        <div class="btn-inner">
+          <div class="spinner"></div>
+          <span class="btn-text">Send Message →</span>
+        </div>
+      </button>
+    </form>
+
+    <div class="success-state" id="successState">
+      <div class="success-icon">✓</div>
+      <div class="success-title">Form Submitted Successfully!</div>
+      <p class="success-msg">Thank you for reaching out. Our team will get back to you within 2–3 business days.</p>
+      <p class="success-ref">Reference ID: <span id="refId"></span></p>
+    </div>
+  </div>
+</section>
+
+<section class="about-strip" id="about">
+  <div>
+    <div class="about-label">Who We Are</div>
+    <h2 class="about-heading">Building a World Where Every Woman Thrives</h2>
+    <p class="about-body">
+      She Can Foundation is a non-profit dedicated to breaking barriers for women through education, mentorship,
+      skill-building, and community. We work at the grassroots level across India — creating real, lasting change,
+      one woman at a time.
+    </p>
+  </div>
+  <div class="about-pillars">
+    <div class="pillar">
+      <div class="pillar-icon">📚</div>
+      <div>
+        <div class="pillar-title">Education</div>
+        <div class="pillar-desc">Scholarships, digital literacy, and learning resources for women of all ages.</div>
+      </div>
+    </div>
+    <div class="pillar">
+      <div class="pillar-icon">🌱</div>
+      <div>
+        <div class="pillar-title">Mentorship</div>
+        <div class="pillar-desc">Connecting women with experienced mentors in business, tech, and the arts.</div>
+      </div>
+    </div>
+    <div class="pillar">
+      <div class="pillar-icon">💼</div>
+      <div>
+        <div class="pillar-title">Skill Building</div>
+        <div class="pillar-desc">Vocational training and entrepreneurship programs for economic independence.</div>
+      </div>
+    </div>
+    <div class="pillar">
+      <div class="pillar-icon">🌸</div>
+      <div>
+        <div class="pillar-title">Community</div>
+        <div class="pillar-desc">Safe spaces, peer circles, and events that celebrate and uplift women.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-brand">She Can Foundation</div>
+  <div class="footer-copy">© 2025 She Can Foundation. All rights reserved.</div>
+  <div class="footer-links">
+    <a href="#">Privacy</a>
+    <a href="#">Terms</a>
+    <a href="#">Instagram</a>
+    <a href="#">Twitter</a>
+  </div>
+</footer>
+
+<script>
+  const msgArea = document.getElementById('message');
+  const charCount = document.getElementById('charCount');
+  msgArea.addEventListener('input', () => {
+    charCount.textContent = msgArea.value.length;
+  });
+
+
+  function showErr(inputId, errId, show) {
+    const el = document.getElementById(inputId);
+    const err = document.getElementById(errId);
+    if (show) { el?.classList.add('error'); err?.classList.add('show'); }
+    else       { el?.classList.remove('error'); err?.classList.remove('show'); }
+  }
+
+  function validateForm() {
+    let valid = true;
+    const fn = document.getElementById('firstName').value.trim();
+    const ln = document.getElementById('lastName').value.trim();
+    const em = document.getElementById('email').value.trim();
+    const tp = document.getElementById('topic').value;
+    const ms = document.getElementById('message').value.trim();
+    const co = document.getElementById('consent').checked;
+
+    showErr('firstName', 'firstNameErr', !fn);             if (!fn) valid = false;
+    showErr('lastName',  'lastNameErr',  !ln);             if (!ln) valid = false;
+    showErr('email',     'emailErr',     !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)); if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) valid = false;
+    showErr('topic',     'topicErr',     !tp);             if (!tp) valid = false;
+    showErr('message',   'messageErr',   ms.length < 10);  if (ms.length < 10) valid = false;
+
+    const consentErr = document.getElementById('consentErr');
+    if (!co) { consentErr.classList.add('show'); valid = false; }
+    else      { consentErr.classList.remove('show'); }
+
+    return valid;
+  }
+
+  ['firstName','lastName','email','topic','message'].forEach(id => {
+    const el = document.getElementById(id);
+    const errMap = { firstName:'firstNameErr', lastName:'lastNameErr', email:'emailErr', topic:'topicErr', message:'messageErr' };
+    el?.addEventListener('input', () => showErr(id, errMap[id], false));
+    el?.addEventListener('change', () => showErr(id, errMap[id], false));
+  });
+  document.getElementById('consent').addEventListener('change', () => {
+    document.getElementById('consentErr').classList.remove('show');
+  });
+
+
+  document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    if (!validateForm()) return;
+
+    const btn = document.getElementById('submitBtn');
+    btn.classList.add('loading');
+    btn.disabled = true;
+
+    setTimeout(() => {
+      btn.classList.remove('loading');
+      this.style.display = 'none';
+      const ss = document.getElementById('successState');
+      ss.classList.add('show');
+      document.getElementById('refId').textContent = 'SCF-' + Math.random().toString(36).substring(2,8).toUpperCase();
+    }, 1600);
+  });
+</script>
+</body>
+</html>
